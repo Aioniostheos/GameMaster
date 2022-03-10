@@ -11,3 +11,6 @@ class Mastermind(Game):
         self.__solution = []
         while len(self.__solution)<= self.__nb_cases:
             self.__solution.append(rd.randint(0,len(self.__lst_couleurs)-1))
+
+    def get_solution(self):
+        return self.__solution
