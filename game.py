@@ -15,3 +15,18 @@ class Game:
 
     def save(self):
         pass
+        #TODO
+
+    def load(self):
+        pass
+        #TODO
+
+    def get_creation_date(self):
+        return self.__creation_date
+
+    def get_players(self):
+        return self.__players
+
+    def pause(self):
+        self.__status = "En pause"
+        self.save()
