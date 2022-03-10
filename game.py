@@ -10,3 +10,6 @@ class Game:
         self.__end_date = None
 
         self.save()
+
+    def save(self):
+        pass
