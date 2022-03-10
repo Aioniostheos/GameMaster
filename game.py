@@ -14,19 +14,32 @@ class Game:
         self.__end_date = end_date
 
     def save(self):
+        # TODO
         pass
-        #TODO
 
     def load(self):
+        # TODO
         pass
-        #TODO
+
+    def pause(self):
+        self.__status = "En pause"
+        self.save()
+
+    def end(self):
+        self.__status = "Finie"
+        self.__end_date = time.asctime()[4:]
+        self.save()
+
+    def get_game_type(self):
+        if self.__game_type is None and self.__game_variant is None:
+            return ""
+        elif self.__game_variant is None:
+            return self.__game_type
+        else:
+            return self.__game_type + "-" + self.__game_variant
 
     def get_creation_date(self):
         return self.__creation_date
 
     def get_players(self):
         return self.__players
-
-    def pause(self):
-        self.__status = "En pause"
-        self.save()
