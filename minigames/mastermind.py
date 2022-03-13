@@ -1,7 +1,6 @@
 import random as rd
-import sys
-sys.path.append('../GameMaster')
-from GameMaster.game import Game
+
+from ..game import Game
 
 class Mastermind(Game):
     def __init__(self, Lst_colorset=["Rouge","Vert","Bleu","Jaune","Blanc","Noir"], Nb_cases=4,Nb_max_coups=12):
