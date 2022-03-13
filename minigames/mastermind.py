@@ -19,6 +19,12 @@ class Mastermind(Game):
     def get_nb_coup():
         return self.__nb_coup
 
+    def get_couleurs():
+        return self.__lst_couleurs
+
+    def get_coups():
+        return self.__lst_coups
+
     def generer(self):
         self.__solution = []
         while len(self.__solution)<= self.__nb_cases:
