@@ -1,5 +1,4 @@
-from datetime import time
-
+import time
 
 class Game:
     def __init__(self, players, game_type=None, game_variant=None,
