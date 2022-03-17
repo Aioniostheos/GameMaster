@@ -1,5 +1,6 @@
 import time
 
+
 class Game:
     def __init__(self, players, game_type=None, game_variant=None,
                  status="En Cours", creation_date=time.asctime()[4:], end_date=None):
@@ -13,12 +14,7 @@ class Game:
         self.__end_date = end_date
 
     def save(self):
-        # TODO
-        pass
-
-    def load(self):
-        # TODO
-        pass
+        main.GAMES[self.get_creation_date()] = self
 
     def pause(self):
         self.__status = "En pause"
@@ -42,3 +38,6 @@ class Game:
 
     def get_players(self):
         return self.__players
+
+    def get_status(self):
+        return self.__status
