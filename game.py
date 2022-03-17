@@ -1,22 +1,4 @@
 import time
-from pathlib import Path
-from xml.etree import ElementTree
-
-import main
-
-
-def load(game_creation_date):  # TODO Generate unique id at game save
-    main.GAMES.get(game_creation_date)
-    pass
-
-
-def loadall():
-    games = {}
-    for path in Path('./data/').glob('**/*.xml'):
-        with path.open() as file:
-            root = ElementTree.parse(file).getroot()
-    main.LOGGER.log(0, "Loaded %s saves", len(games))
-    return games
 
 
 class Game:
