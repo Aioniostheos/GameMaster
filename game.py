@@ -13,7 +13,7 @@ def load(game_creation_date):  # TODO Generate unique id at game save
 def loadall():
     games = {}
     paths = Path('./data/').glob('**/*.xml')
-    utils.LOGGER.log(0, "Find %s game saves", len(paths))
+    utils.LOGGER.log(0, "Find %s game saves", len(list(paths)))
     for path in paths:
         utils.LOGGER.log(0, "Loading %s...", path)
         # with path.open() as file:
@@ -35,7 +35,8 @@ class Game:
         self.__end_date = end_date
 
     def save(self):
-        main.GAMES[self.get_creation_date()] = self
+        # main.GAMES[self.get_creation_date()] = self
+        pass
 
     def pause(self):
         self.__status = "En pause"
