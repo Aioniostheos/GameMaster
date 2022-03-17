@@ -16,13 +16,13 @@ class Mastermind(Game):
     def get_solution(self):
         return self.__solution
 
-    def get_nb_coup():
+    def get_nb_coup(self):
         return self.__nb_coup
 
-    def get_couleurs():
+    def get_couleurs(self):
         return self.__lst_couleurs
 
-    def get_coups():
+    def get_coups(self):
         return self.__lst_coups
 
     def generer(self):
