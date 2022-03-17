@@ -1,4 +1,22 @@
-from datetime import time
+import time
+from pathlib import Path
+from xml.etree import ElementTree
+
+import main
+
+
+def load(game_creation_date):  # TODO Generate unique id at game save
+    main.GAMES.get(game_creation_date)
+    pass
+
+
+def loadall():
+    games = {}
+    for path in Path('./data/').glob('**/*.xml'):
+        with path.open() as file:
+            root = ElementTree.parse(file).getroot()
+    main.LOGGER.log(0, "Loaded %s saves", len(games))
+    return games
 
 
 class Game:
@@ -14,12 +32,7 @@ class Game:
         self.__end_date = end_date
 
     def save(self):
-        # TODO
-        pass
-
-    def load(self):
-        # TODO
-        pass
+        main.GAMES[self.get_creation_date()] = self
 
     def pause(self):
         self.__status = "En pause"
@@ -43,3 +56,6 @@ class Game:
 
     def get_players(self):
         return self.__players
+
+    def get_status(self):
+        return self.__status
