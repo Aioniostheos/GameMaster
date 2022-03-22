@@ -1,25 +1,36 @@
+import logging
 import time
 from pathlib import Path
 from xml.etree import ElementTree
 
-import utils
+import main
+
+logger = logging.getLogger("PyLog")
 
 
-def load(game_creation_date):  # TODO Generate unique id at game save
-    # main.GAMES.get(game_creation_date)
+def load(game_creation_date):
+    main.GAMES.get(game_creation_date)
     pass
 
 
 def loadall():
     games = {}
-    paths = Path('./data/').glob('**/*.xml')
-    utils.LOGGER.log(0, "Find %s game saves", len(list(paths)))
+    paths = list(Path('./data/games/').glob('**/*.xml'))
+    logger.info("Found %s saves", len(paths))
     for path in paths:
-        utils.LOGGER.log(0, "Loading %s...", path)
-        # with path.open() as file:
-        #   root = ElementTree.parse(file).getroot()
-    utils.LOGGER.log(0, "Loaded %s saves", len(games))
+        logger.info("Loading %s...", path)
+        with path.open() as file:
+            root = ElementTree.parse(file).getroot()
+            if root.tag != "game":
+                logger.warning("%s is not a save ! Skipping file...", path)
+                continue
+
+    logger.info("Loaded %s saves", len(games))
     return games
+
+
+def saveall(games):
+    pass
 
 
 class Game:
@@ -34,8 +45,9 @@ class Game:
         self.__creation_date = creation_date
         self.__end_date = end_date
 
+    # TODO Generate Unique ID
     def save(self):
-        # main.GAMES[self.get_creation_date()] = self
+        main.GAMES[self.get_creation_date()] = self
         pass
 
     def pause(self):
