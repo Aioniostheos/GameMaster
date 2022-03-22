@@ -15,7 +15,7 @@ def load(game_creation_date):
 
 def loadall():
     games = {}
-    paths = list(Path('./data/games/').glob('**/*.xml'))
+    paths = list(Path('data/saves/').glob('**/*.xml'))
     logger.info("Found %s saves", len(paths))
     for path in paths:
         logger.info("Loading %s...", path)
