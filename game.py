@@ -4,46 +4,35 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 import main
+from player import Player
 
 logger = logging.getLogger("PyLog")
 
 
-def load(game_creation_date):
-    main.GAMES.get(game_creation_date)
-    pass
-
-
-def loadall():
-    games = {}
-    paths = list(Path('data/saves/').glob('**/*.xml'))
-    logger.info("Found %s saves", len(paths))
-    for path in paths:
-        logger.info("Loading %s...", path)
-        with path.open() as file:
-            root = ElementTree.parse(file).getroot()
-            if root.tag != "game":
-                logger.warning("%s is not a save ! Skipping file...", path)
-                continue
-
-    logger.info("Loaded %s saves", len(games))
-    return games
-
-
-def saveall(games):
-    pass
+class GameInfo:
+    def __init__(self, type, variant, status, creation_date: str, end_date: str, filepath: str):
+        self.type = type
+        self.variant = variant
+        self.status = status
+        self.creation_date = creation_date
+        self.end_date = end_date
+        self.filepath = Path(filepath)
 
 
 class Game:
-    def __init__(self, players, game_type=None, game_variant=None,
-                 status="En Cours", creation_date=time.asctime()[4:], end_date=None):
+    def __init__(self, players: list[Player], gameinfo=GameInfo(None, None, "En Cours", time.asctime()[4:], "", "")):
         self.__players = players
-        self.__game_type = game_type
-        self.__game_variant = game_variant
+        self.__game_type = gameinfo.type
+        self.__game_variant = gameinfo.variant
 
-        self.__status = status
+        self.__status = gameinfo.status
 
-        self.__creation_date = creation_date
-        self.__end_date = end_date
+        self.__creation_date = gameinfo.creation_date
+        self.__end_date = gameinfo.end_date
+
+    @classmethod
+    def load(cls, game_creation_date):
+        raise NotImplementedError()
 
     # TODO Generate Unique ID
     def save(self):
@@ -73,5 +62,28 @@ class Game:
     def get_players(self):
         return self.__players
 
+    def get_players_with(self, prop: str, value: object):
+        return [player for player in self.__players if player.get(prop) == value]
+
     def get_status(self):
         return self.__status
+
+
+def load_all() -> dict[str, GameInfo]:
+    games = {}
+    path = Path("data/saves/games.xml")
+    if not path.exists():
+        logger.info("No game save")
+        pass
+    with path.open() as file:
+        root = ElementTree.parse(file).getroot()
+        if root.tag != "games":
+            logger.warning("Corrupted file: %s", path.name)
+            pass
+        for game in root.findall("game"):
+            pass
+    return games
+
+
+def save_all(games):
+    pass
