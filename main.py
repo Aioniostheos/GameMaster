@@ -2,8 +2,11 @@ import logging
 import time
 
 import game
+nom_fichier = "./data/logs/" + time.asctime().replace(":", "_") + " - debug.log"
+fichier = open(nom_fichier,'w+')
+fichier.close()
 
-logging.basicConfig(filename="./data/logs/" + time.asctime() + "-debug.log", filemode="w", level=logging.DEBUG,
+logging.basicConfig(filename=nom_fichier, filemode="w", level=logging.DEBUG,
                     format='%(asctime)s %(name)s : %(levelname)s : %(message)s')
 logger = logging.Logger("PyLog")
 
