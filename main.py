@@ -1,7 +1,9 @@
 import logging
+import time
+
 import game
 
-logging.basicConfig(filename="./data/logs/debug.log", filemode="w", level=logging.DEBUG,
+logging.basicConfig(filename="./data/logs/" + time.asctime() + "-debug.log", filemode="w", level=logging.DEBUG,
                     format='%(asctime)s %(name)s : %(levelname)s : %(message)s')
 logger = logging.Logger("PyLog")
 
