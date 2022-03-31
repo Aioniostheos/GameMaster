@@ -1,9 +1,10 @@
 import logging
 import time
+from pathlib import Path
 
 import game
-nom_fichier = "./data/logs/" + time.asctime().replace(":", "_") + " - debug.log"
-fichier = open(nom_fichier,'w+')
+nom_fichier = Path("./data/logs/" + time.asctime().replace(":", "_") + " - debug.log")
+fichier = nom_fichier.open('w+')
 fichier.close()
 
 logging.basicConfig(filename=nom_fichier, filemode="w", level=logging.DEBUG,
