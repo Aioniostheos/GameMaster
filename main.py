@@ -5,5 +5,7 @@ logging.basicConfig(filename="./data/logs/debug.log", filemode="w", level=loggin
                     format='%(asctime)s %(name)s : %(levelname)s : %(message)s')
 logger = logging.Logger("PyLog")
 
+GAMES = []
+
 if __name__ == "__main__":
-    GAMES = game.loadall()
+    GAMES = game.load_all()
