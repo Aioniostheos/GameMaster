@@ -1,6 +1,7 @@
 import logging
 import time
 from pathlib import Path
+from typing import List, Dict
 from xml.etree import ElementTree
 
 import main
@@ -20,7 +21,7 @@ class GameInfo:
 
 
 class Game:
-    def __init__(self, players: list[Player], gameinfo=GameInfo(None, None, "En Cours", time.asctime()[4:], "", "")):
+    def __init__(self, players: List[Player], gameinfo=GameInfo(None, None, "En Cours", time.asctime()[4:], "", "")):
         self.__players = players
         self.__game_type = gameinfo.type
         self.__game_variant = gameinfo.variant
@@ -69,7 +70,8 @@ class Game:
         return self.__status
 
 
-def load_all() -> dict[str, GameInfo]:
+
+def load_all() -> Dict[str, GameInfo]:
     games = {}
     path = Path("data/saves/games.xml")
     if not path.exists():
