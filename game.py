@@ -1,6 +1,7 @@
 import logging
 import time
 from pathlib import Path
+from tkinter.ttk import Frame
 from typing import List, Dict
 from xml.etree import ElementTree
 
@@ -30,6 +31,8 @@ class Game:
 
         self.__creation_date = gameinfo.creation_date
         self.__end_date = gameinfo.end_date
+
+        self.frame = None
 
     @classmethod
     def load(cls, game_creation_date):
@@ -69,6 +72,9 @@ class Game:
     def get_status(self):
         return self.__status
 
+    @classmethod
+    def start(cls):
+        raise NotImplementedError()
 
 
 def load_all() -> Dict[str, GameInfo]:
@@ -82,7 +88,9 @@ def load_all() -> Dict[str, GameInfo]:
         if root.tag != "games":
             logger.warning("Corrupted file: %s", path.name)
             pass
-        for game in root.findall("game"):
+        game_elements = root.findall("game")
+        logger.info("Find %s game saves", len(game_elements))
+        for game in game_elements:
             pass
     return games
 
