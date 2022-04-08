@@ -5,8 +5,6 @@ from pathlib import Path
 from tkinter import ttk
 from tkinter.ttk import Button
 
-import game
-
 GAMES = []
 
 path = Path("./data/logs/" + time.asctime().replace(":", "_") + " - debug.log")
@@ -30,7 +28,7 @@ class App(tk.Tk):
         frame_minigames = ttk.Frame(tabcontrol)
         frame_rules = ttk.Frame(tabcontrol)
 
-        Button(frame_minigames, width=10, text="Mastermind").pack()
+        Button(frame_minigames, width=10, text="Mastermind", command=lambda: startMastermind()).pack()
         Button(frame_minigames, width=10, text="Bataille Navale").pack()
 
         tabcontrol.add(frame_gamemaster, text="Game Master")
@@ -47,7 +45,12 @@ class App(tk.Tk):
 
 
 if __name__ == "__main__":
+    import game
+    from minigames.mastermind import Mastermind
     logger = logging.getLogger("PyLog")
     GAMES = game.load_all()
+
+    def startMastermind():
+        Mastermind.start()
 
     App().show()
