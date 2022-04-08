@@ -122,6 +122,7 @@ class Mastermind(Game):
                 Mastermind.start()
             else:
                 self.__app.destroy()
+            self.get_players()[0].get("Statitics").append(["Victory", self.__nb_coups])
         if self.__nb_coups == 12:
             res = tk.messagebox.askretrycancel(title="Dommage...", message="Vous avez perdu...", parent=self.__app)
             if res:
@@ -129,6 +130,7 @@ class Mastermind(Game):
                 Mastermind.start()
             else:
                 self.__app.destroy()
+            self.get_players()[0].get("Statitics").append(["Defeat", self.__nb_coups])
 
     def cycle_color(self, button: tk.Button):
         if button.cget("bg") in self.__lst_couleurs:
