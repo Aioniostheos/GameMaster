@@ -101,12 +101,13 @@ class Mastermind(Game):
         correct = 0
         for i, button in enumerate(selection):
             if button.cget("bg") not in self.__lst_couleurs:
-                pass
+                return
             if button.cget("bg") == self.__solution[i]:
                 temp.remove(button.cget("bg"))
                 color.append("red")
                 correct += 1
-            elif button.cget("bg") in temp:
+        for i, button in enumerate(selection):
+            if button.cget("bg") in temp:
                 temp.remove(button.cget("bg"))
                 color.append("white")
             else:
