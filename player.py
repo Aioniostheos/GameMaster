@@ -4,7 +4,10 @@ class Player:
         self.__properties = { "Statitics": [] }
         pass
 
-    def get(self, prop: str):
+    def getName(self):
+        return self.__name
+
+    def getProperties(self, prop: str):
         return self.__properties.get(prop, None)
 
     def set(self, prop: str, value):
@@ -13,4 +16,4 @@ class Player:
 
     def with_property(self, prop: str, value=None):
         self.__properties[prop] = value
-        return self
+        return self.__properties
