@@ -28,8 +28,8 @@ class App(tk.Tk):
         frame_minigames = ttk.Frame(tabcontrol)
         frame_rules = ttk.Frame(tabcontrol)
 
-        Button(frame_minigames, width=10, text="Mastermind", command=lambda: startMastermind()).pack()
-        Button(frame_minigames, width=10, text="Bataille Navale").pack()
+        Button(frame_minigames, text="Mastermind", command=lambda: startMastermind()).pack()
+        Button(frame_minigames, text="Bataille Navale").pack()
 
         tabcontrol.add(frame_gamemaster, text="Game Master")
         logger.info("Added \"Game Master\" tab")
