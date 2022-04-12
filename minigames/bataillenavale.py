@@ -12,11 +12,6 @@ class Bataillenavale(Game):
 
         self.__lst_bateaux = [[],[]]
         print(self.__lst_bateaux)
-        """
-        |
-        |   /!\ problème d'adresses mémoires, les 2 plateau et les 2 tentatives ont les mêmes listes
-        |
-        """
 
         self.__dico_lettres = {"A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8, "I": 9,
                                "J": 10}  # coords en format lettre-chiffre
@@ -44,15 +39,15 @@ class Bataillenavale(Game):
             return False
 
         ok_placer = True #valeur par défaut pour les testes de possibilitées de plassage après
-        temp_lst = [] # pour append dans la liste des batteau
+        temp_lst = []
         if ligne1 == ligne2:
             cmin = min(colone1,colone2)
             cmax = max(colone1,colone2)
 
-            for i in range (cmin,cmax+1): # test de possibilitées de plassage
+            for i in range (cmin,cmax+1): # test de possibilitées de placement
                 if self.__plateaux[joueur][ligne1][i] == "b":
                     ok_placer = False
-            if ok_placer == True: # plassage
+            if ok_placer == True: # placement
                 for i in range (cmin,cmax+1):
                      self.__plateaux[joueur][ligne1][i] = "b"
                      temp_lst.append(str(ligne1)+str(i))
@@ -63,10 +58,10 @@ class Bataillenavale(Game):
             lmin = min(ligne1,ligne2)
             lmax = max(ligne1,ligne2)
 
-            for i in range (lmin,lmax+1): # test de possibilitées de plassage
+            for i in range (lmin,lmax+1): # test de possibilitées de placement
                 if self.__plateaux[joueur][i][colone1] == "b":
                     ok_placer = False
-            if ok_placer == True: # plassage
+            if ok_placer == True:
                 for i in range (lmin,lmax+1):
                      self.__plateaux[joueur][i][colone1] = "b"
                      temp_lst.append(str(i)+str(colone1))
@@ -85,7 +80,7 @@ class Bataillenavale(Game):
         except:
             return False
 
-        if self.__plateaux[jdef][ligne][colone] == "b": #ataque
+        if self.__plateaux[jdef][ligne][colone] == "b":
             self.__tentatives[jatt][ligne][colone] = "t"
             self.__plateaux[jdef][ligne][colone] = "t"
 
