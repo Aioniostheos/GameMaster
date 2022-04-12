@@ -132,6 +132,8 @@ class Mastermind(Game):
             else:
                 self.__app.destroy()
             self.get_players()[0].get("Statitics").append(["Defeat", self.__nb_coups])
+        super().end()
+        super().save()
 
     def cycle_color(self, button: tk.Button):
         if button.cget("bg") in self.__lst_couleurs:
