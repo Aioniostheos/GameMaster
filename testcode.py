@@ -68,15 +68,21 @@ if __name__ == '__main__':
                 print(str)
 
             print("")
-            print("format des entrés : action ; joueur ; coords ( ; direction ; taille si set)")
+            print("format des entrés : action ; joueur ; coords, (; coords2 si set)")
             print("action : [A/B] ; attaque / bateau ")
             print("joueur : [1/2] ; joueur qui fait l'action ")
-            print("coords : [A-J/1-10] ; format lettre chiffre")
-            print("dirrection : [H/B/G/D] sens du bateau")
+            print("coords1 : [A-J/1-10] ; format lettre chiffre")
+            print("coords1 : [A-J/1-10] ; format lettre chiffre")
             entre = input("action ? :")
             lst_entre = entre.split(";")
 
             if lst_entre[0] == "B":
-                if len(lst_entre) == 5:
-                    OK = jeux.set_bateau(lst_entre[1], lst_entre[2], lst_entre[3], int(lst_entre[4]))
+                if len(lst_entre) == 4:
+                    OK = jeux.set_bateau(lst_entre[1], lst_entre[2], lst_entre[3])
+                    print(OK)
+                    print(jeux.get_bateaux())
+
+            if lst_entre[0] == "A":
+                if len(lst_entre) == 3:
+                    OK = jeux.jouer(lst_entre[1], lst_entre[2])
                     print(OK)

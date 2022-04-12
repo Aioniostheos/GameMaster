@@ -7,20 +7,11 @@ class Bataillenavale(Game):
     def __init__(self, TailleGrille=10):
         self.__taille_grilles = TailleGrille
 
-        # temp_lst1 = []
-        # temp_lst2 = []
-        # while len(temp_lst1) < self.__taille_grilles:
-        #     temp_lst1.append("v")
-        # while len(temp_lst2) < self.__taille_grilles:
-        #     temp_lst2.append(temp_lst1[:])
-        # self.__plateaux = []
-        # self.__plateaux.append(temp_lst2[:])
-        # self.__plateaux.append(temp_lst2[:])
-        # self.__tentatives = []
-        # self.__tentatives.append(temp_lst2[:])
-        # self.__tentatives.append(temp_lst2[:])
-        self.__plateaux = [[["v"]*10]*10]*2
-        self.__tentatives = [[["v"]*10]*10]*2
+        self.__plateaux = [[["v" for i in range(TailleGrille)] for j in range(TailleGrille)] for k in range(2)]
+        self.__tentatives = [[["v" for i in range(TailleGrille)] for j in range(TailleGrille)] for k in range(2)]
+
+        self.__lst_bateaux = [[],[]]
+        print(self.__lst_bateaux)
         """
         |
         |   /!\ problème d'adresses mémoires, les 2 plateau et les 2 tentatives ont les mêmes listes
@@ -38,59 +29,94 @@ class Bataillenavale(Game):
         joueur = int(joueur)
         return self.__tentatives[joueur - 1]
 
-    def set_bateau(self, joueur, coords, direction, taille):  # direction est un str : {"H","B","G","D"}
-        print(joueur,coords,direction,taille)
-        ligne = self.__dico_lettres[coords[0]]-1
-        colone = int(coords[1])-1
-        joueur = int(joueur)
-        cases_ok = 0
-        for i in range(taille):
-            try:
-                if direction == "H":
-                    if self.__plateaux[joueur - 1][ligne - i][colone] == "v":
-                        cases_ok += 1
-                if direction == "B":
-                    if self.__plateaux[joueur - 1][ligne + i][colone] == "v":
-                        cases_ok += 1
-                if direction == "G":
-                    if self.__plateaux[joueur - 1][ligne][colone - i] == "v":
-                        cases_ok += 1
-                if direction == "D":
-                    if self.__plateaux[joueur - 1][ligne][colone + i] == "v":
-                        cases_ok += 1
-            except:
-                pass
+    def get_bateaux(self):
+        return self.__lst_bateaux
 
-        if cases_ok == taille:
-            for i in range(taille):
-                if direction == "H":
-                    self.__plateaux[joueur - 1][ligne - i][colone] = "b"
-                if direction == "B":
-                    self.__plateaux[joueur - 1][ligne + i][colone] = "b"
-                if direction == "G":
-                    self.__plateaux[joueur - 1][ligne][colone - i] = "b"
-                if direction == "D":
-                    self.__plateaux[joueur - 1][ligne][colone + i] = "b"
-            return True
+    def set_bateau(self,joueur, coords1, coords2):
+        try:
+            joueur = int(joueur)-1
+            ligne1 = self.__dico_lettres[coords1[0]]-1
+            colone1 = int(coords1[1:])-1
 
-        return False  # cas ou le set n'a pas pue se faire
+            ligne2 = self.__dico_lettres[coords2[0]]-1
+            colone2 = int(coords2[1:])-1
+        except:
+            return False
+
+        ok_placer = True #valeur par défaut pour les testes de possibilitées de plassage après
+        temp_lst = [] # pour append dans la liste des batteau
+        if ligne1 == ligne2:
+            cmin = min(colone1,colone2)
+            cmax = max(colone1,colone2)
+
+            for i in range (cmin,cmax+1): # test de possibilitées de plassage
+                if self.__plateaux[joueur][ligne1][i] == "b":
+                    ok_placer = False
+            if ok_placer == True: # plassage
+                for i in range (cmin,cmax+1):
+                     self.__plateaux[joueur][ligne1][i] = "b"
+                     temp_lst.append(str(ligne1)+str(i))
+                self.__lst_bateaux[joueur].append(temp_lst)
+                return True
+
+        elif colone1 == colone2:
+            lmin = min(ligne1,ligne2)
+            lmax = max(ligne1,ligne2)
+
+            for i in range (lmin,lmax+1): # test de possibilitées de plassage
+                if self.__plateaux[joueur][i][colone1] == "b":
+                    ok_placer = False
+            if ok_placer == True: # plassage
+                for i in range (lmin,lmax+1):
+                     self.__plateaux[joueur][i][colone1] = "b"
+                     temp_lst.append(str(i)+str(colone1))
+                self.__lst_bateaux[joueur].append(temp_lst)
+                return True
+
+        return False
+
 
     def jouer(self, joueur, coords):  # joueur est celui qui joue
-        ligne = self.__dico_lettres[coords[0]]
-        colone = int(coords[1])-1
-        joueur = int(joueur)-1
+        try:
+            ligne = self.__dico_lettres[coords[0]]-1
+            colone = int(coords[1:])-1
+            jatt = int(joueur)-1
+            jdef = int(joueur)%2
+        except:
+            return False
 
-        if self.__plateaux[joueur % 2][ligne][colone] == "b":
-            self.__tentatives[joueur - 1][ligne][colone] = "t"
-            self.__plateaux[joueur % 2][ligne][colone] = "t"
+        if self.__plateaux[jdef][ligne][colone] == "b": #attaque
+            self.__tentatives[jatt][ligne][colone] = "t"
+            self.__plateaux[jdef][ligne][colone] = "t"
+            print("")
+            print("----- DEBUG -----")
+            for lst_coords_bateau in self.__lst_bateaux[jdef]:  #detection de coullage de bateaux
+                print("verif")
+                if (str(ligne)+str(colone)) in lst_coords_bateau:
+                    print("BITE")
+                    touché = 0
+                    for coords in lst_coords_bateau:
+                        print("COORDS")
+                        if self.__plateaux[jdef][int(coords[0])][int(coords[1])] == "t":
+                            touché +=1
+                            print("touché :",touché,"  -- len:",len(lst_coords_bateau))
+                    if touché == len(lst_coords_bateau):
+                        print("ok!")
+                        for coords in lst_coords_bateau:
+                            self.__plateaux[jdef][int(coords[0])][int(coords[1])] = "c"
+                            self.__tentatives[jatt][int(coords[0])][int(coords[1])] = "c"
+            print("----- FIN DEBUG ------")
 
-            if self.__plateaux[joueur % 2][ligne - 1][colone] == "t":
-                pass
-                """
-                |
-                |   /!\ à faire : detection de coullage de bateau (passage des cases en "c")
-                |
-                """
+            """
+            |
+            |   /!\ à TESTER : detection de coullage de bateau (passage des cases en "c")
+            |
+            """
+            return True
 
+        elif self.__plateaux[jdef][ligne][colone] == "t":
+            return False
         else:
-            self.__tentatives[joueur - 1][ligne][colone] = "m"
+            self.__tentatives[jatt][ligne][colone] = "m"
+            self.__plateaux[jdef][ligne][colone] = "m"
+            return  True
