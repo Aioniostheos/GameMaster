@@ -12,7 +12,7 @@ logger = logging.getLogger("PyLog")
 
 
 class GameInfo:
-    def __init__(self, type, variant, status, creation_date: str, end_date: str, filepath: str):
+    def __init__(self, type, variant, status="En Cours", creation_date: str = time.asctime()[4:], end_date: str = "", filepath: str = ""):
         self.type = type
         self.variant = variant
         self.status = status
@@ -22,7 +22,7 @@ class GameInfo:
 
 
 class Game:
-    def __init__(self, players: List[Player], gameinfo=GameInfo(None, None, "En Cours", time.asctime()[4:], "", "")):
+    def __init__(self, players: List[Player], gameinfo=GameInfo(None, None)):
         self.__players = players
         self.__game_type = gameinfo.type
         self.__game_variant = gameinfo.variant
