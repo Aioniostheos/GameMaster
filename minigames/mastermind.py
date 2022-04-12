@@ -104,14 +104,14 @@ class Mastermind(Game):
                 return
             if button.cget("bg") == self.__solution[i]:
                 temp.remove(button.cget("bg"))
-                color.append("red")
+                color.append("black")
                 correct += 1
         for i, button in enumerate(selection):
             if button.cget("bg") in temp:
                 temp.remove(button.cget("bg"))
                 color.append("white")
             else:
-                color.append("black")
+                color.append("light grey")
         for i, button in enumerate(self.__tentatives[self.__nb_coups]):
             button.config(bg=selection[i].cget("bg"), activebackground=color[i])
         self.__nb_coups += 1
