@@ -1,3 +1,4 @@
+import logging
 import random
 import tkinter as tk
 from tkinter import messagebox
@@ -7,6 +8,7 @@ from typing import Dict, List
 from game import Game
 from player import Player
 
+logger = logging.getLogger("PyLog")
 
 class Mastermind(Game):
     @classmethod
@@ -46,6 +48,7 @@ class Mastermind(Game):
         app = tk.Tk()
         app.title("Mastermind")
         app.geometry("175x175")
+        logger.info("Starting Mastermind...")
 
         entry = Entry(app)
         entry.pack()
@@ -58,7 +61,9 @@ class Mastermind(Game):
     def play(self, app):
         self.__app = app
         self.generer()
+        logger.debug("Solution is %s", self.__solution)
         app.geometry("250x575")
+        logger.info("Starting game...")
         frame = Frame(app)
         frame.pack(side=tk.BOTTOM, fill=tk.X)
         frame.grid_columnconfigure(0, weight=1)
@@ -96,7 +101,7 @@ class Mastermind(Game):
         tk.Button(frame, text="Valider", width=10, command=lambda: self.attempt(selection)).grid(row=1, column=3, columnspan=2)
 
     def attempt(self, selection: List[tk.Button]):
-        color = []
+        color = ["" for i in range(4)]
         temp = self.__solution.copy()
         correct = 0
         for i, button in enumerate(selection):
@@ -104,17 +109,18 @@ class Mastermind(Game):
                 return
             if button.cget("bg") == self.__solution[i]:
                 temp.remove(button.cget("bg"))
-                color.append("black")
+                color[i] = "black"
                 correct += 1
         for i, button in enumerate(selection):
             if button.cget("bg") in temp:
                 temp.remove(button.cget("bg"))
-                color.append("white")
+                color[i] = "white" if color[i] == "" else color[i]
             else:
-                color.append("light grey")
+                color[i] = "light grey" if color[i] == "" else color[i]
         for i, button in enumerate(self.__tentatives[self.__nb_coups]):
             button.config(bg=selection[i].cget("bg"), activebackground=color[i])
         self.__nb_coups += 1
+        logger.info("%s good colors", correct)
         if correct >= 4:
             res = tk.messagebox.askretrycancel(title="Félicitations", message="Vous avez gagné ! ("
             + str(self.__nb_coups) + " coups)", parent=self.__app)
@@ -124,6 +130,11 @@ class Mastermind(Game):
             else:
                 self.__app.destroy()
             self.get_players()[0].get("Statitics").append(["Victory", self.__nb_coups])
+            logger.info("Game ended with player victory in %s turns.", self.__nb_coups)
+            self.end()
+            logger.info("Game marked as ended.")
+            self.save()
+            logger.info("Game saved.")
         if self.__nb_coups == 12:
             res = tk.messagebox.askretrycancel(title="Dommage...", message="Vous avez perdu...", parent=self.__app)
             if res:
@@ -132,8 +143,11 @@ class Mastermind(Game):
             else:
                 self.__app.destroy()
             self.get_players()[0].get("Statitics").append(["Defeat", self.__nb_coups])
-        super().end()
-        super().save()
+            logger.info("Game ended with player defeat.")
+            self.end()
+            logger.info("Game marked as ended.")
+            self.save()
+            logger.info("Game saved.")
 
     def cycle_color(self, button: tk.Button):
         if button.cget("bg") in self.__lst_couleurs:

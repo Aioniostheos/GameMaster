@@ -5,7 +5,7 @@ from pathlib import Path
 from tkinter import ttk
 from tkinter.ttk import Button
 
-GAMES = []
+GAMES = {}
 
 path = Path("./data/logs/" + time.asctime().replace(":", "_") + " - debug.log")
 with path.open('w+') as file:
@@ -41,7 +41,6 @@ class App(tk.Tk):
 
     def show(self):
         self.mainloop()
-        logger.info("Showing App")
 
 
 if __name__ == "__main__":
