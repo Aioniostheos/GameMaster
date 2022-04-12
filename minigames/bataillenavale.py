@@ -85,33 +85,21 @@ class Bataillenavale(Game):
         except:
             return False
 
-        if self.__plateaux[jdef][ligne][colone] == "b": #attaque
+        if self.__plateaux[jdef][ligne][colone] == "b": #ataque
             self.__tentatives[jatt][ligne][colone] = "t"
             self.__plateaux[jdef][ligne][colone] = "t"
-            print("")
-            print("----- DEBUG -----")
+
             for lst_coords_bateau in self.__lst_bateaux[jdef]:  #detection de coullage de bateaux
-                print("verif")
                 if (str(ligne)+str(colone)) in lst_coords_bateau:
-                    print("BITE")
                     touché = 0
                     for coords in lst_coords_bateau:
-                        print("COORDS")
                         if self.__plateaux[jdef][int(coords[0])][int(coords[1])] == "t":
                             touché +=1
-                            print("touché :",touché,"  -- len:",len(lst_coords_bateau))
                     if touché == len(lst_coords_bateau):
-                        print("ok!")
                         for coords in lst_coords_bateau:
                             self.__plateaux[jdef][int(coords[0])][int(coords[1])] = "c"
                             self.__tentatives[jatt][int(coords[0])][int(coords[1])] = "c"
-            print("----- FIN DEBUG ------")
 
-            """
-            |
-            |   /!\ à TESTER : detection de coullage de bateau (passage des cases en "c")
-            |
-            """
             return True
 
         elif self.__plateaux[jdef][ligne][colone] == "t":
