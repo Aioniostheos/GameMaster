@@ -4,7 +4,7 @@ from main import game
 
 def getPlayerStats(pPlayer: Player):
     nomPlayer = pPlayer.getName()
-    statsPlayer = pPlayer.getProperties()
+    statsPlayer = pPlayer.get("Statitics")
     return nomPlayer, statsPlayer
 
 

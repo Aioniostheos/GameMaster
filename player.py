@@ -7,7 +7,7 @@ class Player:
     def getName(self):
         return self.__name
 
-    def getProperties(self, prop: str):
+    def get(self, prop: str):
         return self.__properties.get(prop, None)
 
     def set(self, prop: str, value):
