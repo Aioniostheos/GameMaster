@@ -5,7 +5,7 @@ from tkinter import messagebox
 from tkinter.ttk import Frame, Entry
 from typing import Dict, List
 
-from game import Game
+from game import Game, GameInfo
 from player import Player
 
 logger = logging.getLogger("PyLog")
