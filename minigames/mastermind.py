@@ -16,7 +16,7 @@ class Mastermind(Game):
         pass
 
     def __init__(self, player, colorset: Dict[str, str] = None):
-        super().__init__([player], GameInfo("Mastermind"))
+        super().__init__([player], GameInfo("Mastermind", None))
         if colorset is None:
             colorset = {"Rouge": "#AC0000", "Vert": "#00FF00", "Bleu": "#0000FF",
                         "Jaune": "#FFFF00", "Blanc": "#FFFFFF", "Noir": "#000000"}

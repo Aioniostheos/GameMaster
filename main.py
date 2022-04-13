@@ -52,4 +52,11 @@ if __name__ == "__main__":
     def startMastermind():
         Mastermind.start()
 
-    App().show()
+    app = App()
+
+    def on_closing():
+        game.save_all(GAMES)
+        app.destroy()
+
+    app.protocol("WM_DELETE_WINDOW", on_closing)
+    app.show()
