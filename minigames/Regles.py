@@ -1,4 +1,5 @@
 import logging
+from tkinter import *
 def RechercheMotsclefs() :
    chaine = eval(input("Que recherchez-vous ? "))
    fichier = open('ReglesDesJeux.docs','r')
@@ -8,15 +9,15 @@ def RechercheMotsclefs() :
    fichier.close()
 
 
-class Regles()
+class Regles():
     def __init__(self) :
         self.__app = None
     def start(self) :
-        app = tk.Tk()
+        app = Tk()
         app.title("liste des règles")
         entry = Entry(app)
         entry.pack()
-        Affichage = Label(app, text=open('RegledDesJeux.docs',r))
+        Affichage = Label(app, text=open('RegledDesJeux.docs','r'))
         Affichage.pack()
         app.mainloop()
         bouton = Button(app, text="Fermer", command=app.quit)
