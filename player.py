@@ -1,7 +1,7 @@
 class Player:
-    def __init__(self, name=None, properties={ "Statitics": [] }):
+    def __init__(self, name=None, properties=None):
         self.__name = name if name != "" or name is not None else "Guest"
-        self.__properties = properties
+        self.__properties = properties if properties is not None else { "Statitics": [] }
         pass
 
     def getName(self):

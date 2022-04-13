@@ -29,7 +29,7 @@ class App(tk.Tk):
         frame_rules = ttk.Frame(tabcontrol)
 
         Button(frame_minigames, text="Mastermind", command=lambda: startMastermind()).pack()
-        Button(frame_minigames, text="Bataille Navale").pack()
+        Button(frame_minigames, text="Bataille Navale", command=lambda: startBatailleNavale()).pack()
 
         tabcontrol.add(frame_gamemaster, text="Game Master")
         logger.info("Added \"Game Master\" tab")
@@ -46,11 +46,14 @@ class App(tk.Tk):
 if __name__ == "__main__":
     import game
     from minigames.mastermind import Mastermind
+    from minigames.bataillenavale import BatailleNavale
     logger = logging.getLogger("PyLog")
     GAMES = game.load_all()
 
     def startMastermind():
         Mastermind.start()
+    def startBatailleNavale():
+        BatailleNavale.start()
 
     app = App()
 
