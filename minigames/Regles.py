@@ -8,10 +8,11 @@ from tkinter import *
 #  fichier.close()
 
 
-class Regles():
-    def __init__(self) :
+class Regles ():
+    def __init__(self):
         self.__app = None
-    def start(self) :
+
+    def start(self):
         app = Tk()
         fichier = open('RegleDesJeux.docs','r')
         app.title("liste des règles")
