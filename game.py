@@ -70,8 +70,15 @@ class Game:
     def get_players(self):
         return self.__players
 
-    def get_players_with(self, prop: str, value: object):
+    def get_players_with(self, prop: str, value):
         return [player for player in self.__players if player.get(prop) == value]
+
+    def show_players_with(self, prop: str, value):
+        players = self.get_players_with(prop, value)
+        var = ""
+        for player in players:
+            var += player.getName() + "\r\n"
+        return var
 
     def get_status(self):
         return self.__status
