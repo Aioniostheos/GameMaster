@@ -2,6 +2,8 @@ from tkinter import *
 from game import GameInfo
 from typing import List
 from player import Player
+import logging
+logger = logging.getLogger("PyLog")
 
 class LoupGarou() :
     def __init__(self, players: List[Player]):
@@ -31,18 +33,34 @@ class LoupGarou() :
     #associer à chaque role ses caractéristiques : ex : une sorcière a deux potions
 
 
-    def play_night (self, players):
+    def play_night (self, players, app):
     #à améliorer : appeler les joueurs dans l'odre en tenant compte de s'ils servent à quelque chose (sorcière sans potion ne sert à rien)
-    tour = Label(app, text="appeler le voleur")
-    tour.pack()
-    app.mainloop()
-    logger.info("Starting game...")
+        tour1 = Label(app, text="Appeler le voleur")
+        tour1.pack()
+        app.mainloop()
+        logger.info("Il n'apparait qu'au premier tour")
+        tour1 = Label(app, text="Appeler Cupidon")
+        tour1.pack()
+        app.mainloop()
+        logger.info("Il n'apparait qu'au premier tour et désigne deux amoureux")
+        tour1 = Label(app, text="Appeler la voyante")
+        tour1.pack()
+        app.mainloop()
+        logger.info("Elle choisit une carte à regarder")
+        tour1 = Label(app, text="Appeler les loups garous, rappeler que la petite fille se réveille secrètement")
+        tour1.pack()
+        app.mainloop()
+        logger.info("Ils tuent un joueur par nuit")
+        tour1 = Label(app, text="Appeler la sorcière")
+        tour1.pack()
+        app.mainloop()
+        logger.info("Elle a en tout deux potions : une sert à tuer, l'autre à revivre")
 
     def morts_NuitEtVotes (self, players, morts, vivants):
     #ajouter le(s) joueur(s) mort(s) dans la nuit et le joueur mort par vote à la liste morts et les enlever de la liste vivants
 
 
-    def equipe_gagnante(self, players, vivants):
+    def equipe_gagnante(self, players, vivants, app):
         m=0
         for player in vivants
             if player.role is not "Loups garous"
